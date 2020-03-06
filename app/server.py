@@ -71,10 +71,6 @@ def move():
     isCloserToFood_UP =  isCloserToFood(snakeHeadX, snakeHeadY-1, currentNearestFood, distanceTonearestFood)
     isCloserToFood_DOWN =  isCloserToFood(snakeHeadX, snakeHeadY+1, currentNearestFood, distanceTonearestFood)
     print("LEFTFOOD:", isCloserToFood_LEFT,"UPFOOD:", isCloserToFood_UP,"DOWNFOOD:", isCloserToFood_DOWN,"RIGHTFOOD:", isCloserToFood_RIGHT,)
-    print("isFoodLeft: ", isFoodLeft(snakeHeadXY,currentNearestFood))
-    print("isFoodRight: ", isFoodRight(snakeHeadXY,currentNearestFood))
-    print("isFoodUp: ", isFoodUp(snakeHeadXY,currentNearestFood))
-    print("isFoodDown: ", isFoodDown(snakeHeadXY,currentNearestFood))
 
     if isFoodUp(snakeHeadXY,getFoodSpaces(resp_dict)):
         response = {"move": "up", "shout": shout}
@@ -105,9 +101,7 @@ def move():
         body=json.dumps(response),
         )
     elif myHealth >= 80:
-        print("Healthy")
         if isUpFree(snakeHeadX, snakeHeadY, getAllSnakeSpaces(resp_dict)):
-            print("Healthy UP")
             response = {"move": "up", "shout": shout}
             return HTTPResponse(
             status=200,
@@ -115,7 +109,6 @@ def move():
             body=json.dumps(response),
             )
         elif isLeftFree(snakeHeadX, snakeHeadY, getAllSnakeSpaces(resp_dict)):
-            print("Healthy Left")
             response = {"move": "left", "shout": shout}
             return HTTPResponse(
             status=200,
@@ -123,7 +116,6 @@ def move():
             body=json.dumps(response),
             )
         elif isDownFree(snakeHeadX, snakeHeadY, maxHeight, getAllSnakeSpaces(resp_dict)):
-            print("Healthy Down")
             response = {"move": "down", "shout": shout}
             return HTTPResponse(
             status=200,
@@ -131,7 +123,6 @@ def move():
             body=json.dumps(response),
             )
         elif isRightFree(snakeHeadX, snakeHeadY, maxHeight, getAllSnakeSpaces(resp_dict)):
-            print("Healthy RIGHT")
             response = {"move": "right", "shout": shout}
             return HTTPResponse(
             status=200,
@@ -149,9 +140,7 @@ def move():
             body=json.dumps(response),
         )
     elif myHealth < 80:
-        print("Hungry")
-        if (isDownFree(snakeHeadX, snakeHeadY, maxHeight, getAllSnakeSpaces(resp_dict)) and isCloserToFood_DOWN):
-            print("Hungry DOWN")           
+        if (isDownFree(snakeHeadX, snakeHeadY, maxHeight, getAllSnakeSpaces(resp_dict)) and isCloserToFood_DOWN):  
             response = {"move": "down", "shout": shout}
             return HTTPResponse(
             status=200,
@@ -159,7 +148,6 @@ def move():
             body=json.dumps(response),
             )
         elif (isRightFree(snakeHeadX, snakeHeadY, maxHeight, getAllSnakeSpaces(resp_dict)) and isCloserToFood_RIGHT) : 
-            print("Hungry RIGHT")
             response = {"move": "right", "shout": shout}
             return HTTPResponse(
             status=200,
@@ -167,7 +155,6 @@ def move():
             body=json.dumps(response),
             )
         elif (isUpFree(snakeHeadX, snakeHeadY, getAllSnakeSpaces(resp_dict)) and isCloserToFood_UP):
-            print("Hungry UP")
             response = {"move": "up", "shout": shout}
             return HTTPResponse(
             status=200,
@@ -175,7 +162,6 @@ def move():
             body=json.dumps(response),
             )
         elif (isLeftFree(snakeHeadX, snakeHeadY, getAllSnakeSpaces(resp_dict)) and isCloserToFood_LEFT):
-            print("Hungry LEFT")
             response = {"move": "left", "shout": shout}
             return HTTPResponse(
             status=200,
@@ -189,25 +175,21 @@ def move():
                 if (proposedMove == "up"):
                     if isUpFree(snakeHeadX, snakeHeadY, getAllSnakeSpaces(resp_dict)):
                         move = "up"
-                        print("move has been set to up", move)
                     else:
                         proposedMove = random.choice(directions) 
                 elif (proposedMove == "left"):
                     if isLeftFree(snakeHeadX, snakeHeadY, getAllSnakeSpaces(resp_dict)):
                         move = "left"
-                        print("move has been set to left", move)
                     else:
                         proposedMove = random.choice(directions) 
                 elif (proposedMove == "right"):
                     if isRightFree(snakeHeadX, snakeHeadY, maxHeight, getAllSnakeSpaces(resp_dict)):
                         move = "right"
-                        print("move has been set to right", move)
                     else:
                         proposedMove = random.choice(directions) 
                 elif (proposedMove == "down"):
                     if isDownFree(snakeHeadX, snakeHeadY, maxHeight, getAllSnakeSpaces(resp_dict)):
                         move = "down"
-                        print("move has been set to down", move)
                     else:
                         proposedMove = random.choice(directions)  
 
@@ -298,29 +280,25 @@ def getAllSnakeSpaces(boardData):
         snake = snake + 1
     return allSnakeSpaces
 
-def isFoodLeft(snakeHead, nearestFood):
-    print("SnakeHeadLeft: ", (snakeHead[0]-1,snakeHead[1]))
-    print((snakeHead[0]-1,snakeHead[1]) in nearestFood)
+def isFoodLeft(snakeHead, nearestFood):   
+    print((snakeHead[0]-1,snakeHead[1]) in nearestFood.values())
     if (snakeHead[0]-1,snakeHead[1]) in nearestFood:
         return True
     return False
 def isFoodRight(snakeHead, nearestFood):
-    print("SnakeHeadRight: ", (snakeHead[0]+1,snakeHead[1]))
-    print((snakeHead[0]+1,snakeHead[1]) in nearestFood)
+    print((snakeHead[0]+1,snakeHead[1]) in nearestFood.values())
     if (snakeHead[0]+1,snakeHead[1]) in nearestFood:
         return True
     return False
 
 def isFoodUp(snakeHead, nearestFood):
-    print("SnakeHeadUp: ", (snakeHead[0], snakeHead[1]-1))
-    print((snakeHead[0], snakeHead[1]-1) in nearestFood)
+    print((snakeHead[0], snakeHead[1]-1) in nearestFood.values())
     if (snakeHead[0], snakeHead[1]-1) in nearestFood:
         return True
     return False
 
 def isFoodDown(snakeHead, nearestFood):
-    print("SnakeHeadDown: ", (snakeHead[0], snakeHead[1]+1))
-    print((snakeHead[0], snakeHead[1]+1) in nearestFood)
+    print((snakeHead[0], snakeHead[1]+1) in nearestFood.values())
     if (snakeHead[0], snakeHead[1]+1) in nearestFood:
         return True
     return False
