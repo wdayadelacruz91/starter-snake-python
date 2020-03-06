@@ -281,28 +281,23 @@ def getAllSnakeSpaces(boardData):
     return allSnakeSpaces
 
 def isFoodLeft(snakeHead, nearestFood):   
-    print((snakeHead[0]-1,snakeHead[1]) in nearestFood.values())
     if (snakeHead[0]-1,snakeHead[1]) in nearestFood:
         return True
     return False
 def isFoodRight(snakeHead, nearestFood):
-    print((snakeHead[0]+1,snakeHead[1]) in nearestFood.values())
     if (snakeHead[0]+1,snakeHead[1]) in nearestFood:
         return True
     return False
 
 def isFoodUp(snakeHead, nearestFood):
-    print((snakeHead[0], snakeHead[1]-1) in nearestFood.values())
     if (snakeHead[0], snakeHead[1]-1) in nearestFood:
         return True
     return False
 
 def isFoodDown(snakeHead, nearestFood):
-    print((snakeHead[0], snakeHead[1]+1) in nearestFood.values())
     if (snakeHead[0], snakeHead[1]+1) in nearestFood:
         return True
     return False
-    
 
 def getFoodSpaces(boardData):
     allFoodSpaces = {}
